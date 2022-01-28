@@ -12,12 +12,12 @@ function marknotif_read($guid) {
         return false;
     }
     $Notification = new OssnNotifications;
-    marknotif_LogData("Notification marked read.");
-    $Notification->statement("UPDATE ossn_notifications SET viewed='' WHERE(guid='{$guid}');");
+    error_log("Notification marked read.");
+    $Notification->statement("UPDATE ossn_notifications SET viewed='' WHERE(owner_guid='{ossn_loggedin_user()->getGUID()}' and guid='{$guid}');");
     if($Notification->execute()) {
         return true;
     }
-    marknotif_LogData("Notification failed to mark read.");
+    error_log("Notification failed to mark read.");
     return false;
 
 }
@@ -38,12 +38,12 @@ function marknotif_unread($guid) {
     // if the value is not null it's read.
     $nix = NULL;
     $Notification = new OssnNotifications;
-    marknotif_LogData("Notification marked unread.");
-    $Notification->statement("UPDATE ossn_notifications SET viewed={$nix} WHERE(guid='{$guid}');");
+    error_log("Notification marked unread.");
+    $Notification->statement("UPDATE ossn_notifications SET viewed={$nix} WHERE(owner_guid='{ossn_loggedin_user()->getGUID()}' and guid='{$guid}');");
     if($Notification->execute()) {
         return true;
     }
-    marknotif_LogData("Notification failed to mark unread.");
+    error_log("Notification failed to mark unread.");
     return false;
 }
 
@@ -59,46 +59,15 @@ function marknotif_delete($guid) {
     if (empty($guid)) {
         return false;
     } else {
+        ;
         $Notification->statement("DELETE FROM ossn_notifications WHERE(
-				guid='{$guid}');");
+				owner_guid='{ossn_loggedin_user()->getGUID()}' and guid='{$guid}');");
         if ($Notification->execute()) {
-            marknotif_LogData("Notification Deleted Successfully.");
+            error_log("Notification Deleted Successfully.");
             return true;
         }
     }
-    marknotif_LogData("Notification Deletion Failed.");
+    error_log("Notification Deletion Failed.");
     return false;
 }
 
-function marknotif_LogError(Exception $e) {
-    // Log an error.
-    $handle = fopen('errlog.Log', "a");
-    if ($handle != 'FALSE') {
-        // write the data
-        $date = new DateTime("now");
-        $LogTime = $date->format('m-d-Y H:i:s') . ' GMT';
-        fwrite($handle, "Timestamp: $LogTime\r\n");
-        fwrite($handle, "Exception Message: {$e->getMessage()} \r\n");
-        fwrite($handle, "Exception File: {$e->getFile()} \r\n");
-        fwrite($handle, "Exception Line: {$e->getLine()} \r\n");
-        fwrite($handle, "Exception Code: {$e->getCode()} \r\n");
-        fwrite($handle, "Exception Trace: {$e->getTraceAsString()} \r\n------------------------------------\r\n");
-        fflush($handle);
-        fclose($handle);
-    }
-}
-
-function marknotif_LogData($message) {
-    // Log an error.
-    $handle = fopen('errlog.Log', "a");
-    if ($handle != 'FALSE') {
-        // write the data
-        $date = new DateTime("now");
-        $LogTime = $date->format('m-d-Y H:i:s') . ' GMT';
-        fwrite($handle, "Timestamp: $LogTime\r\n");
-        fwrite($handle, "Message: {$message} \r\n");
-        fwrite($handle, "------------------------------------\r\n");
-        fflush($handle);
-        fclose($handle);
-    }
-}
