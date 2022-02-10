@@ -1,4 +1,15 @@
 <?php
+
+/**
+ * Apophis Software Component for OSSN v. 5.6 - 6.1.
+ *
+ * @package   Apophis Software MarkNotification
+ * @author    Apophis Software
+ * @copyright (C) Apophis Software
+ * @license   Open Source Social Network License (OSSN LICENSE)  http://www.opensource-socialnetwork.org/licence
+ * @link      https://www.apophissoftware.com/
+ */
+
 define('__MARKNOTIFICATION__', ossn_route()->com . 'MarkNotification/');
 
 function ossn_mark_notifications_init() {

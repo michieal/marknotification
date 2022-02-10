@@ -1,4 +1,12 @@
 <?php
+/**
+ * Open Source Social Network
+ * @link      https://www.opensource-socialnetwork.org/
+ * @package   MarkNotification
+ * @author    Michieal O'Sullivan
+ * @copyright (C) Apophis Software
+ * @license   GNU General Public License https://www.gnu.org/licenses/gpl-3.0.en.html
+ */
 
 /**
  * Mark the singular Notification as read.
@@ -12,12 +20,12 @@ function marknotif_read($guid) {
         return false;
     }
     $Notification = new OssnNotifications;
-    error_log("Notification marked read.");
-    $Notification->statement("UPDATE ossn_notifications SET viewed='' WHERE(owner_guid='{ossn_loggedin_user()->getGUID()}' and guid='{$guid}');");
+    $ownerGuid = ossn_loggedin_user()->getGUID();
+    $Notification->statement("UPDATE ossn_notifications SET viewed='' WHERE(owner_guid='{$ownerGuid}' and guid='{$guid}');");
     if($Notification->execute()) {
         return true;
     }
-    error_log("Notification failed to mark read.");
+    error_log("Notification failed to mark read.",0);
     return false;
 
 }
@@ -38,12 +46,12 @@ function marknotif_unread($guid) {
     // if the value is not null it's read.
     $nix = NULL;
     $Notification = new OssnNotifications;
-    error_log("Notification marked unread.");
-    $Notification->statement("UPDATE ossn_notifications SET viewed={$nix} WHERE(owner_guid='{ossn_loggedin_user()->getGUID()}' and guid='{$guid}');");
+    $ownerGuid = ossn_loggedin_user()->getGUID();
+    $Notification->statement("UPDATE ossn_notifications SET viewed={$nix} WHERE(owner_guid='{$ownerGuid}' and guid='{$guid}');");
     if($Notification->execute()) {
         return true;
     }
-    error_log("Notification failed to mark unread.");
+    error_log("Notification failed to mark unread.",0);
     return false;
 }
 
@@ -59,15 +67,14 @@ function marknotif_delete($guid) {
     if (empty($guid)) {
         return false;
     } else {
-        ;
+        $ownerGuid = ossn_loggedin_user()->getGUID();
         $Notification->statement("DELETE FROM ossn_notifications WHERE(
-				owner_guid='{ossn_loggedin_user()->getGUID()}' and guid='{$guid}');");
+				owner_guid='{$ownerGuid}' and guid='{$guid}');");
         if ($Notification->execute()) {
-            error_log("Notification Deleted Successfully.");
             return true;
         }
     }
-    error_log("Notification Deletion Failed.");
+    error_log("Notification Deletion Failed.",0);
     return false;
 }
 

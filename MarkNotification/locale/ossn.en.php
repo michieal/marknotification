@@ -1,4 +1,12 @@
 <?php
+/**
+ * Open Source Social Network
+ * @link      https://www.opensource-socialnetwork.org/
+ * @package   MarkNotification
+ * @author    Michieal O'Sullivan
+ * @copyright (C) Apophis Software
+ * @license   GNU General Public License https://www.gnu.org/licenses/gpl-3.0.en.html
+ */
 ossn_register_languages('en', array(
 	 'mark:notification:read' => 'Mark Read ✔️',
 	 'mark:notification:read:title' => 'Mark Notification as read.',
