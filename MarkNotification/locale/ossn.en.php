@@ -22,6 +22,6 @@ ossn_register_languages('en', array(
     'mark:notification:unread:error' => 'Error in marking notification as unread.',
     'mark:notification:delete:likes' => '❌ Delete All Reactions <div class="ossn-notification-icon-like"></div>',
     'mark:notification:delete:likes:title' => 'Remove every Like style Notification.',
-    'mark:notification:delete:likes:success' => 'Successfully deleted reaction notifications [Under Development].',
-    'mark:notification:delete:likes:error' => 'Error in deleting reaction notifications.',
+    'mark:notification:delete:likes:success' => 'Successfully deleted reaction notifications.',
+    'mark:notification:delete:likes:error' => 'Error in deleting reaction notifications, or none found.',
 ));
