@@ -65,8 +65,8 @@ function notification_insert_custom_html($hook, $htype, $return, $params) {
     $nguid = $params->guid;
 
     if (!empty($return)) {
-        $doc = new DOMDocument();
-        $doc->loadHTML($return, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $doc = new DOMDocument('1.0', 'UTF-8');
+        $doc->loadHTML('<?xml encoding="UTF-8">'.$return, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
         $div = $doc->getElementsByTagName('a')->item(0);
 
