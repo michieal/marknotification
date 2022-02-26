@@ -1,13 +1,12 @@
 <?php
 
 /**
- * Apophis Software Component for OSSN v. 5.6 - 6.1.
- *
- * @package   Apophis Software MarkNotification
- * @author    Apophis Software
+ * Open Source Social Network
+ * @link      https://www.opensource-socialnetwork.org/
+ * @package   MarkNotification
+ * @author    Michieal O'Sullivan
  * @copyright (C) Apophis Software
- * @license   Open Source Social Network License (OSSN LICENSE)  http://www.opensource-socialnetwork.org/licence
- * @link      https://www.apophissoftware.com/
+ * @license   GNU General Public License https://www.gnu.org/licenses/gpl-3.0.en.html
  */
 
 define('__MARKNOTIFICATION__', ossn_route()->com . 'MarkNotification/');
@@ -72,8 +71,6 @@ function notification_insert_custom_html($hook, $htype, $return, $params) {
 
         $frag = $doc->createDocumentFragment();
 
-        if ($div->hasAttributes() )
-
         //Mark the notification as read
         $link = htmlspecialchars(ossn_site_url("action/mark/read?guid=" . $nguid, true));
         $notif_text = ossn_print('mark:notification:read');
@@ -88,56 +85,21 @@ function notification_insert_custom_html($hook, $htype, $return, $params) {
         $data = "<a href='" . $link . "' class='apop-notif-delete' title='" . $notif_title . "'>" . $notif_text . "</a>";
         $frag->appendXml($data);
 
+/*        //Mark the notification as unread
+        $link = htmlspecialchars(ossn_site_url("action/mark/unread?guid=" . $nguid, true));
+        $notif_text = ossn_print('mark:notification:unread');
+        $notif_title = ossn_print('mark:notification:unread:title');
+        $data = "<a href='" . $link . "' class='apop-notif-unread' title='" . $notif_title . "'>" . $notif_text . "</a>";
+        $frag->appendXml($data);
+*/
         $data = "<br/><hr class='apop-hr'/>";
         $frag->appendXML($data);
 
         $div->appendChild($frag);
 
-        return $doc->saveHTML();
+        //return $doc->saveHTML();
+        return str_replace('<?xml encoding="UTF-8">', '', $doc->saveHTML());
     }
     return $return;
 }
-
-/**
- * Mark Notifications page (Copy of Notifications All page.)
- *
- * @param (array) $pages Array containing pages
- *
- * @return false|null data;
- * @access public
- */
-function mark_notifications_page($pages) {
-    $page = $pages[0];
-    if (empty($page)) {
-        return false;
-    }
-    switch ($page) {
-        case 'all':
-            $title = 'Mark Notifications';
-            $contents = array(
-                'content' => ossn_plugin_view('marknotif/pages/all')
-            );
-            $content = ossn_set_page_layout('media', $contents);
-            echo ossn_view_page($title, $content);
-
-            break;
-        case 'read':
-            redirect('home');
-            break;
-
-        case 'delete':
-            redirect('home');
-            break;
-
-        default:
-            $title = 'Mark Notifications';
-            $contents = array(
-                'content' => ossn_plugin_view('marknotif/pages/all')
-            );
-            $content = ossn_set_page_layout('media', $contents);
-            echo ossn_view_page($title, $content);
-            break;
-    }
-}
-
 ossn_register_callback('ossn', 'init', 'ossn_mark_notifications_init');
