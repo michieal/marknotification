@@ -14,6 +14,8 @@ define('__MARKNOTIFICATION__', ossn_route()->com . 'MarkNotification/');
 function ossn_mark_notifications_init() {
     //css
     ossn_extend_view('css/ossn.default', 'css/marknotif');
+    //js
+    ossn_extend_view('js/opensource.socialnetwork', 'js/marknotif');
     //pages
     ossn_register_page('mark', 'ossn_notifications_page');
     //actions
@@ -72,17 +74,17 @@ function notification_insert_custom_html($hook, $htype, $return, $params) {
         $frag = $doc->createDocumentFragment();
 
         //Mark the notification as read
-        $link = htmlspecialchars(ossn_site_url("action/mark/read?guid=" . $nguid, true));
+        $link = 'javascript:void(0);'; //htmlspecialchars(ossn_site_url("action/mark/read?guid=" . $nguid, true));
         $notif_text = ossn_print('mark:notification:read');
         $notif_title = ossn_print('mark:notification:read:title');
-        $data = "<a href='" . $link . "' class='apop-notif-read' title='" . $notif_title . "'>" . $notif_text . "</a>";
+        $data = "<a href='" . $link . "' class='apop-notif-read' OnClick='mnInstant(2, {$nguid})' title='" . $notif_title . "'>" . $notif_text . "</a>";
         $frag->appendXml($data);
 
         //Delete the notification.
         $notif_text = ossn_print('mark:notification:delete');
         $notif_title = ossn_print('mark:notification:delete:title');
-        $link = htmlspecialchars(ossn_site_url("action/mark/delete?guid={$nguid}", true));
-        $data = "<a href='" . $link . "' class='apop-notif-delete' title='" . $notif_title . "'>" . $notif_text . "</a>";
+        $link ='javascript:void(0);'; //htmlspecialchars(ossn_site_url("action/mark/delete?guid={$nguid}", true));
+        $data = "<a href='" . $link . "' class='apop-notif-delete' OnClick='mnInstant(1, {$nguid})' title='" . $notif_title . "'>" . $notif_text . "</a>";
         $frag->appendXml($data);
 
 /*        //Mark the notification as unread
