@@ -37,3 +37,13 @@ border: 1px solid white;
 border-radius: 3px;
 padding: 5px
 }
+
+.apop-bottom-link{
+float:right;
+position:relative;
+display:inline;
+border: 1px solid white;
+border-radius: 3px;
+margin-top: -5px;
+margin-right: 5px;
+}

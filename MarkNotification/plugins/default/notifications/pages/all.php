@@ -1,12 +1,11 @@
 <?php
 /**
  * Open Source Social Network
- *
- * @package   (openteknik.com).ossn
- * @author    OSSN Core Team <info@openteknik.com>
- * @copyright (C) OpenTeknik LLC
- * @license   Open Source Social Network License (OSSN LICENSE)  http://www.opensource-socialnetwork.org/licence
  * @link      https://www.opensource-socialnetwork.org/
+ * @package   MarkNotification
+ * @author    Michieal O'Sullivan
+ * @copyright (C) Apophis Software. (C) OpenTeknik LLC, for base code.
+ * @license   GNU General Public License https://www.gnu.org/licenses/gpl-3.0.en.html; Base code: (OSSN LICENSE)  http://www.opensource-socialnetwork.org/licence
  */
 
 $get = new  OssnNotifications;
@@ -25,7 +24,6 @@ $notif_title = ossn_print('mark:notification:delete:likes:title');
 $link = htmlspecialchars(ossn_site_url("action/mark/delete?dal=1", true));
 $data = "<a href='" . $link . "' class='apop-notif-delete-button' title='" . $notif_title . "' >" . $notif_text . "</a>";
 $list .= '<div>' . $data . '<br/><br/></div>';
-
 
 if ($notifications) {
     foreach ($notifications as $item) {
